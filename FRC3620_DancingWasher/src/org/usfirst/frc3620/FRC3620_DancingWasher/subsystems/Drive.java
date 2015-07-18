@@ -70,21 +70,21 @@ public class Drive extends Subsystem {
          double  xMove = getJoystickX(hid);
          double lSpin = getJoystickLT(hid);
          double rSpin = getJoystickRT(hid);
-         double rotate = rSpin - lSpin;
+         double rotate = lSpin - rSpin;
          if(System.currentTimeMillis() % 1000  < 10)
          {
         	 System.out.println("Y: " + yMove + "\nX: " + xMove + "\nLS: " + lSpin);
         	 System.out.println("RS: " + rSpin + "\nRotate: " + rotate);
          }
-         if(yMove < 0.2 && yMove > -0.2)
+         if(yMove < 0.15 && yMove > -0.15)
          {
         	 yMove = 0;
          }
-         if(xMove < 0.2 && xMove > -0.2)
+         if(xMove < 0.15 && xMove > -0.15)
          {
         	 xMove = 0;
          }
-         if(rotate < 0.2 && rotate > -0.2)
+         if(rotate < 0.15 && rotate > -0.15)
          {
         	 rotate = 0;
          }
@@ -93,9 +93,9 @@ public class Drive extends Subsystem {
          robotDriveMecanum4.mecanumDrive_Cartesian(xMove, yMove, rotate, gyro);
     }
     
-    public void setDrive(double moveX, double moveY, double rotate)
+    public void setDrive(double moveX, double moveY, double rotate, double gyro)
     {
-    	//robotDriveMecanum4.mecanumDrive_Polar(moveX, moveY, rotate);   
+    		robotDriveMecanum4.mecanumDrive_Cartesian(moveX, moveY, rotate, gyro);   
     }
 }
 

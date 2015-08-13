@@ -156,7 +156,7 @@ Children:
           default: '0'
           name: Output Channel (Relay)
           validators: [RelayOutput]
-          value: '1'
+          value: '0'
       Base: Spike
       Name: Tank1Shoot
     - Children: []

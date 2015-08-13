@@ -65,7 +65,7 @@ public class RobotMap {
         shooterSubsystemTank1Solenoid = new DoubleSolenoid(0, 0, 1);      
         LiveWindow.addActuator("ShooterSubsystem", "Tank1Solenoid", shooterSubsystemTank1Solenoid);
         
-        shooterSubsystemTank1Shoot = new Relay(1);
+        shooterSubsystemTank1Shoot = new Relay(0);
         LiveWindow.addActuator("ShooterSubsystem", "Tank1Shoot", shooterSubsystemTank1Shoot);
         
         shooterSubsystemTank1PressureSensor = new AnalogInput(0);

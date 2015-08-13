@@ -32,6 +32,7 @@ public class RobotMap {
     public static SpeedController driveSpeedController0;
     public static SpeedController driveSpeedController2;
     public static RobotDrive driveRobotDriveMecanum4;
+    public static DigitalInput driveKillSwitch;
     public static DoubleSolenoid shooterSubsystemTank1Solenoid;
     public static Relay shooterSubsystemTank1Shoot;
     public static AnalogInput shooterSubsystemTank1PressureSensor;
@@ -62,6 +63,9 @@ public class RobotMap {
 
         driveRobotDriveMecanum4.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
         driveRobotDriveMecanum4.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        driveKillSwitch = new DigitalInput(0);
+        LiveWindow.addSensor("Drive", "KillSwitch", driveKillSwitch);
+        
         shooterSubsystemTank1Solenoid = new DoubleSolenoid(0, 0, 1);      
         LiveWindow.addActuator("ShooterSubsystem", "Tank1Solenoid", shooterSubsystemTank1Solenoid);
         

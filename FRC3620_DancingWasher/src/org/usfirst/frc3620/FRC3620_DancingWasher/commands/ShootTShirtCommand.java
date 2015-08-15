@@ -11,6 +11,7 @@
 
 package org.usfirst.frc3620.FRC3620_DancingWasher.commands;
 
+import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -34,14 +35,18 @@ Timer timer = new Timer();
    
     	 // Called just before this Command runs the first time
         protected void initialize() {
+        	System.out.println("luv yal -Steve");
         	timer.reset();
         	timer.start();
         }
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	
-        	Robot.shooterSubsystem.startShooter1();
+        	if(Robot.shooterSubsystem.isLidUp){
+        		Robot.shooterSubsystem.startShooter1();
+        	}else{
+        		Robot.oi.driveJoystick.setRumble(RumbleType.kLeftRumble, 1);
+        	}
         }
 
         // Make this return true when this Command no longer needs to run execute()
@@ -55,6 +60,7 @@ Timer timer = new Timer();
         // Called once after isFinished returns true
         protected void end() {
         	Robot.shooterSubsystem.stopShooter1();
+        	Robot.oi.driveJoystick.setRumble(RumbleType.kLeftRumble, 0);
         }
 
         // Called when another command which requires one or more of the same

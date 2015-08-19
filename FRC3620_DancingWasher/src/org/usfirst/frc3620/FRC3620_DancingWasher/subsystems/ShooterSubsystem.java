@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -60,8 +61,19 @@ public class ShooterSubsystem extends Subsystem {
     }
     public double getTank1Pressure() {
     	double voltage = tank1PressureSensor.getVoltage();
-    	double pressure = (voltage - .5) * 20;
-    	// TODO fix this calculation 
+    	double pressure;
+    	 
+    	if (voltage <= 1.7) {
+        	// 0.5 v = 00 lb
+        	// 1.3 v = 30 lb
+    		pressure = (voltage - 0.5) * (10 / 0.3);
+    	} else {
+        	// 1.7 v = 40 lb
+        	// 2.0 v = 50 lb
+        	// 2.3 v = 60 lb
+        	// 2.6 v = 70 lb
+    		pressure = 40 + (voltage - 1.7)  * (10 / 0.3);
+    	}
     	return pressure;
     }
     public void liftLid(){
@@ -71,6 +83,10 @@ public class ShooterSubsystem extends Subsystem {
     public void dropLid(){
     	tank1Lid.set(Value.kReverse);
     	isLidUp = false;
+    }
+    public void updateDashboard() {
+    	SmartDashboard.putNumber("Tank1Pressure", getTank1Pressure());
+    	SmartDashboard.putNumber("Tank1Voltage", tank1PressureSensor.getVoltage());
     }
 }
 

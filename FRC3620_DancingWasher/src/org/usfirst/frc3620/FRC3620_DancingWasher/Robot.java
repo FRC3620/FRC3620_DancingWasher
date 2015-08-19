@@ -65,11 +65,13 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
+    	
 
     }
 
     public void disabledPeriodic() {
         Scheduler.getInstance().run();
+        updateDashboard();
     }
 
     public void autonomousInit() {
@@ -82,6 +84,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        updateDashboard();
     }
 
     public void teleopInit() {
@@ -97,6 +100,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateDashboard();
     }
 
     /**
@@ -104,5 +108,11 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
+    	updateDashboard();
+    }
+    
+    void updateDashboard() {
+    	shooterSubsystem.updateDashboard();
+    	drive.updateDashboard();
     }
 }

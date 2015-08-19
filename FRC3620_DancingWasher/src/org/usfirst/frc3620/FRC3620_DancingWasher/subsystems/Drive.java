@@ -17,6 +17,7 @@ import org.usfirst.frc3620.FRC3620_DancingWasher.commands.*;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -112,5 +113,9 @@ public class Drive extends Subsystem {
     	}
     	
     }
+    public void updateDashboard() {
+    	SmartDashboard.putBoolean("KillSwitchIsSafe", ifSafeCommand());
+    }
+
 }
 

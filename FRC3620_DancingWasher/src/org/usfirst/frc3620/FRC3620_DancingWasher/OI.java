@@ -71,9 +71,9 @@ public class OI {
         shootSafetyRB.whileHeld(new EnableShootRB());
         shootSafetyLB = new JoystickButton(driveJoystick, 6);
         shootSafetyLB.whileHeld(new EnableShootLB());
-        dropLidButton = new JoystickButton(driveJoystick, 11);
+        dropLidButton = new JoystickButton(driveJoystick, 3);
         dropLidButton.whenPressed(new DropLidCommand());
-        liftLidButton = new JoystickButton(driveJoystick, 10);
+        liftLidButton = new JoystickButton(driveJoystick, 4);
         liftLidButton.whenPressed(new LiftLidCommand());
         shootTShirtButton = new JoystickButton(driveJoystick, 1);
         shootTShirtButton.whenPressed(new ShootTShirtCommand());

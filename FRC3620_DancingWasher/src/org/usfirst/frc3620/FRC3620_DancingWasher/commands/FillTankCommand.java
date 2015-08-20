@@ -41,7 +41,7 @@ public class  FillTankCommand extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         double pressure = Robot.shooterSubsystem.getTank1Pressure();
-        if (pressure > 50) return true;
+        if (pressure > 60) return true;
         return false;
     }
 

@@ -42,7 +42,7 @@ Timer timer = new Timer();
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	if(Robot.shooterSubsystem.isLidUp && Robot.shooterSubsystem.safetiesPressed[0] && Robot.shooterSubsystem.safetiesPressed[1]){
+        	if(Robot.shooterSubsystem.isLidUp /*&& Robot.shooterSubsystem.safetiesPressed[0] && Robot.shooterSubsystem.safetiesPressed[1]*/){
         		Robot.shooterSubsystem.startShooter1();
         	}else{
         		Robot.oi.driveJoystick.setRumble(RumbleType.kLeftRumble, 1);
@@ -51,7 +51,7 @@ Timer timer = new Timer();
 
         // Make this return true when this Command no longer needs to run execute()
         protected boolean isFinished() {
-        	if (timer.get() >= .5 ) {
+        	if (timer.get() >= 1 ) {
         		return true;
         	}
             return false;

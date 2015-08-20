@@ -42,7 +42,7 @@ Timer timer = new Timer();
 
         // Called repeatedly when this Command is scheduled to run
         protected void execute() {
-        	if(Robot.shooterSubsystem.isLidUp){
+        	if(Robot.shooterSubsystem.isLidUp && Robot.shooterSubsystem.safetiesPressed[0] && Robot.shooterSubsystem.safetiesPressed[1]){
         		Robot.shooterSubsystem.startShooter1();
         	}else{
         		Robot.oi.driveJoystick.setRumble(RumbleType.kLeftRumble, 1);

@@ -77,6 +77,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         // schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
+
+        // TODO set shooter state here
     }
 
     /**
@@ -93,12 +95,15 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        
+        // TODO set shooter state here
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	shooterSubsystem.makeTheShooterWork();
         Scheduler.getInstance().run();
         updateDashboard();
     }

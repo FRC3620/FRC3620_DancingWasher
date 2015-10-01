@@ -39,8 +39,8 @@ public class ShooterSubsystem extends Subsystem {
     final double fillPressure = 65;
 
 	private ShootingSystemState currentState = ShootingSystemState.IDLE;
-	boolean shootingTank1IsFull = false;
-	boolean shootingTank2IsFull = false;
+	private double tank1Pressure = -1;
+	private double tank2Pressure = -1;
 	
 	public boolean isLidUp = false;
 	public boolean[] safetiesPressed = new boolean[2];
@@ -135,12 +135,6 @@ public class ShooterSubsystem extends Subsystem {
 		isLidUp = false;
 	}
 
-	public void updateDashboard()
-	{
-		SmartDashboard.putNumber("Tank1Pressure", getShootingTankPressure());
-		SmartDashboard.putNumber("Tank1Voltage", pressureSensor.getVoltage());
-	}
-
 	Timer shootingTimer = null;
 	Timer switchingTimer = null;
 
@@ -162,14 +156,13 @@ public class ShooterSubsystem extends Subsystem {
 			stopShooter1();
 			stopShooter2();
 
-			// TODO check the tank pressure, change state to SWITCHING when we
+			// check the tank pressure, change state to SWITCHING when we
 			// are at pressure
-			getShootingTankPressure();
-			double pressure1 = Robot.shooterSubsystem.getShootingTankPressure();
-			if (pressure1 > fillPressure)
+			tank1Pressure = Robot.shooterSubsystem.getShootingTankPressure();
+			updateDashboardWithTank1Pressure();
+			if (tank1Pressure > fillPressure)
 			{
-				currentState = ShootingSystemState.SWITCHING;
-				shootingTank1IsFull = true;
+				setShootingSystemState(ShootingSystemState.SWITCHING);
 			}
 			break;
 
@@ -191,7 +184,7 @@ public class ShooterSubsystem extends Subsystem {
 			if (switchingTimer.get() > 1)
 			{
 				switchingTimer = null;
-				currentState = ShootingSystemState.FILLING2;
+				setShootingSystemState(ShootingSystemState.FILLING2);
 			}
 			break;
 
@@ -201,13 +194,12 @@ public class ShooterSubsystem extends Subsystem {
 			stopShooter1();
 			stopShooter2();
 
-			// TODO check the tank pressure, change state to ALLREADY when we
+			// check the tank pressure, change state to ALLREADY when we
 			// are at pressure
-			getShootingTankPressure();
-			double pressure2 = Robot.shooterSubsystem.getShootingTankPressure();
-			if (pressure2 > fillPressure) {
-				currentState = ShootingSystemState.ALLREADY;
-				shootingTank2IsFull = true;
+			tank2Pressure = getShootingTankPressure();
+			updateDashboardWithTank2Pressure();
+			if (tank2Pressure > fillPressure) {
+				setShootingSystemState(ShootingSystemState.ALLREADY);
 			}
 
 			break;
@@ -232,12 +224,13 @@ public class ShooterSubsystem extends Subsystem {
 				shootingTimer.start();
 			}
 
-			// TODO move to state T2ONLYREADY when the timer is expired
+			// move to state T2ONLYREADY when the timer is expired
 			if (shootingTimer.get() > .5)
 			{
 				shootingTimer = null;
-				currentState = ShootingSystemState.T2ONLYREADY;
-				shootingTank1IsFull = false;
+				setShootingSystemState(ShootingSystemState.T2ONLYREADY);
+				tank1Pressure = -1;
+				updateDashboardWithTank1Pressure();
 			}
 
 			break;
@@ -252,7 +245,7 @@ public class ShooterSubsystem extends Subsystem {
 			startShooter2();
 			stopShooter1();
 			closeFillValve();
-			// TODO start a timer the first time we are here
+			// start a timer the first time we are here
 			if (shootingTimer == null)
 			{
 				shootingTimer = new Timer();
@@ -260,12 +253,13 @@ public class ShooterSubsystem extends Subsystem {
 				shootingTimer.start();
 			}
 
-			// TODO move to state IDLE when the timer is expired
+			// move to state IDLE when the timer is expired
 			if (shootingTimer.get() > .5)
 			{
 				shootingTimer = null;
-				currentState = ShootingSystemState.IDLE;
-				shootingTank2IsFull = false;
+				setShootingSystemState(ShootingSystemState.IDLE);
+				tank2Pressure = -1;
+				updateDashboardWithTank2Pressure();
 			}
 			break;
 
@@ -280,7 +274,33 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public void setShootingSystemState (ShootingSystemState newState) {
-		SmartDashboard.putString("Shooter", newState.toString());
 		currentState = newState;
+		updateDashboardWithCurrentState();
 	}
+	
+	private void updateDashboardWithCurrentState() {
+		SmartDashboard.putString("Shooter", currentState.toString());
+		Robot.writeToDS("Shooter is in state " + currentState.toString());
+	}
+	
+	private void updateDashboardWithTank1Pressure() {
+		SmartDashboard.putNumber("tank 1 pressure", tank1Pressure);
+	}
+	
+	private void updateDashboardWithTank2Pressure() {
+		SmartDashboard.putNumber("tank 2 pressure", tank1Pressure);
+	}
+	
+	public void initializeDashboard() {
+		updateDashboardWithCurrentState();
+		updateDashboardWithTank1Pressure();
+		updateDashboardWithTank2Pressure();
+		updateDashboardFromSensors();
+	}
+
+    public void updateDashboardFromSensors()
+    {
+        SmartDashboard.putNumber("PressureSensorPSI", getShootingTankPressure());
+        SmartDashboard.putNumber("PressureSensorVoltage", pressureSensor.getVoltage());
+    }
 }

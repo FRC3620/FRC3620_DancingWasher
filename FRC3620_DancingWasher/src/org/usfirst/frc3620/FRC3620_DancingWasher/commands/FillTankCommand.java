@@ -12,7 +12,9 @@
 package org.usfirst.frc3620.FRC3620_DancingWasher.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
+import org.usfirst.frc3620.FRC3620_DancingWasher.subsystems.ShootingSystemState;
 
 /**
  *
@@ -31,28 +33,27 @@ public class  FillTankCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooterSubsystem.openFill1();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if (Robot.shooterSubsystem.getShootingSystemState() == ShootingSystemState.IDLE) {
+    		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.FILLING1);
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        double pressure = Robot.shooterSubsystem.getTank1Pressure();
-        if (pressure > 60) return true;
-        return false;
+    	return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.shooterSubsystem.closeFill1();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.shooterSubsystem.closeFill1();
     }
 }

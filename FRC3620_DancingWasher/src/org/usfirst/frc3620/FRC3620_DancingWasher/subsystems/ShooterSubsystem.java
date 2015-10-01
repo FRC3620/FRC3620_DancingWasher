@@ -134,12 +134,6 @@ public class ShooterSubsystem extends Subsystem {
 		isLidUp = false;
 	}
 
-	public void updateDashboard()
-	{
-		SmartDashboard.putNumber("PressureSensorPSI", getShootingTankPressure());
-		SmartDashboard.putNumber("PressureSensorVoltage", pressureSensor.getVoltage());
-	}
-
 	Timer shootingTimer = null;
 	Timer switchingTimer = null;
 
@@ -300,5 +294,12 @@ public class ShooterSubsystem extends Subsystem {
 		updateDashboardWithCurrentState();
 		updateDashboardWithTank1Pressure();
 		updateDashboardWithTank2Pressure();
+		updateDashboardFromSensors();
 	}
+
+    public void updateDashboardFromSensors()
+    {
+        SmartDashboard.putNumber("PressureSensorPSI", getShootingTankPressure());
+        SmartDashboard.putNumber("PressureSensorVoltage", pressureSensor.getVoltage());
+    }
 }

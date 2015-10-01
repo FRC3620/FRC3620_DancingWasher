@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
     }
 
     void updateDashboard() {
-        shooterSubsystem.updateDashboard();
+        shooterSubsystem.updateDashboardFromSensors();
         drive.updateDashboard();
     }
 

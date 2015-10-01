@@ -37,8 +37,8 @@ public class  FillTankCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (Robot.shooterSubsystem.currentState == ShootingSystemState.IDLE) {
-    		Robot.shooterSubsystem.currentState = ShootingSystemState.FILLING1;
+    	if (Robot.shooterSubsystem.getShootingSystemState() == ShootingSystemState.IDLE) {
+    		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.FILLING1);
     	}
     	
     }

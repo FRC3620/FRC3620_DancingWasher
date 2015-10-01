@@ -10,7 +10,6 @@
 
 package org.usfirst.frc3620.FRC3620_DancingWasher.commands;
 
-import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -23,6 +22,8 @@ import org.usfirst.frc3620.FRC3620_DancingWasher.subsystems.ShootingSystemState;
 public class ShootTShirtCommand extends Command {
 	Timer timer = new Timer();
 
+	RumbleCommand rumbleCommand = new RumbleCommand();
+
 	public ShootTShirtCommand() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -34,45 +35,39 @@ public class ShootTShirtCommand extends Command {
 	}
 
 	// Called just before this Command runs the first time
-	protected void initialize()
-	{
+	protected void initialize() {
 	}
 
 	// Called repeatedly when this Command is scheduled to run
-	protected void execute()
-	{
-    	if (Robot.shooterSubsystem.currentState == ShootingSystemState.ALLREADY) {
-    		Robot.shooterSubsystem.currentState = ShootingSystemState.SHOOTING1;
-    	}
-    	if (Robot.shooterSubsystem.currentState == ShootingSystemState.T2ONLYREADY) {
-    		Robot.shooterSubsystem.currentState = ShootingSystemState.SHOOTING2;
-    	}
-    	
-    	// TODO test code
-    	if (Robot.shooterSubsystem.currentState == ShootingSystemState.FILLING1) {
-    		Robot.shooterSubsystem.currentState = ShootingSystemState.SWITCHING;
-    	}
-    	if (Robot.shooterSubsystem.currentState == ShootingSystemState.FILLING2) {
-    		Robot.shooterSubsystem.currentState = ShootingSystemState.ALLREADY;
-    	}
-    	
+	protected void execute() {
+		if (!Robot.shooterSubsystem.isLidUp) {
+			rumbleCommand.setMessage("Can't shooter with lid up");
+			rumbleCommand.start();
+		} else {
+			ShootingSystemState currentState = Robot.shooterSubsystem.getShootingSystemState();
+			if (currentState == ShootingSystemState.ALLREADY) {
+				Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.SHOOTING1);
+			} else if (currentState == ShootingSystemState.T2ONLYREADY) {
+				Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.SHOOTING2);
+			} else {
+				rumbleCommand.setMessage("Not ready to shoot");
+				rumbleCommand.start();
+			}
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
-	protected boolean isFinished()
-	{
+	protected boolean isFinished() {
 		return true;
 	}
 
 	// Called once after isFinished returns true
-	protected void end()
-	{
+	protected void end() {
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
-	protected void interrupted()
-	{
+	protected void interrupted() {
 	}
 
 }

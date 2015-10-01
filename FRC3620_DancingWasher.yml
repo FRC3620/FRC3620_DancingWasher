@@ -160,7 +160,7 @@ Children:
           validators: &id011 [Solenoid]
           value: '0'
       Base: Double Solenoid
-      Name: Tank1Solenoid
+      Name: Fill Valve
     - Children: []
       Properties:
         Output Channel (Relay): !!robotbuilder.data.properties.ChoicesProperty
@@ -180,7 +180,7 @@ Children:
           validators: &id013 [AnalogInput]
           value: '1'
       Base: Analog Input
-      Name: Tank1PressureSensor
+      Name: Pressure Sensor
     - Children: []
       Properties:
         Forward PCM (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
@@ -219,11 +219,55 @@ Children:
           value: '0'
       Base: Analog Input
       Name: a0
+    - Children: []
+      Properties:
+        Forward PCM (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id004
+          default: '0'
+          name: Forward PCM (Solenoid)
+          validators: *id005
+          value: '0'
+        Reverse PCM (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id006
+          default: '0'
+          name: Reverse PCM (Solenoid)
+          validators: *id007
+          value: '0'
+        Reverse Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id008
+          default: '0'
+          name: Reverse Channel (Solenoid)
+          validators: *id009
+          value: '5'
+        Forward Channel (Solenoid): !!robotbuilder.data.properties.ChoicesProperty
+          choices: *id010
+          default: '0'
+          name: Forward Channel (Solenoid)
+          validators: *id011
+          value: '4'
+      Base: Double Solenoid
+      Name: Direction Valve
+    - Children: []
+      Properties:
+        Output Channel (Relay): !!robotbuilder.data.properties.ChoicesProperty
+          choices: ['0', '1', '2', '3']
+          default: '0'
+          name: Output Channel (Relay)
+          validators: [RelayOutput]
+          value: '1'
+      Base: Relay Solenoid
+      Name: Tank2Shoot
     Properties:
       Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
         name: Default Command, type: Command, validators: null, value: None}
     Base: Subsystem
     Name: ShooterSubsystem
+  - Children: []
+    Properties:
+      Default Command: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Default Command, type: Command, validators: null, value: None}
+    Base: Subsystem
+    Name: RumblerSubsystem
   Properties: {}
   Base: Subsystems
   Name: Subsystems
@@ -459,6 +503,14 @@ Children:
         name: Button on SmartDashboard, validators: null, value: false}
     Base: Command
     Name: EnableShootRB
+  - Children: []
+    Properties:
+      Requires: !!robotbuilder.data.properties.TypeSelectionProperty {default: None,
+        name: Requires, type: Subsystem, validators: null, value: RumblerSubsystem}
+      Button on SmartDashboard: !!robotbuilder.data.properties.BooleanProperty {default: true,
+        name: Button on SmartDashboard, validators: null, value: false}
+    Base: Command
+    Name: RumbleCommand
   Properties: {}
   Base: Commands
   Name: Commands

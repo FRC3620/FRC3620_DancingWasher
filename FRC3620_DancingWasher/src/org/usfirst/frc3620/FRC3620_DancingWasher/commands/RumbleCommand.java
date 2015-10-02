@@ -41,6 +41,7 @@ public class  RumbleCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	SmartDashboard.putString("Reason", message);
+    	Robot.writeToDS("** " + message);
     	Robot.rumblerSubsystem.rumblerOn();
     	timer.reset();
     	timer.start();

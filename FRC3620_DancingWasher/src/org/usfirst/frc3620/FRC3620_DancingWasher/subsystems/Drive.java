@@ -72,7 +72,7 @@ public class Drive extends Subsystem {
          double  xMove = getJoystickX(hid);
          double lSpin = getJoystickLT(hid);
          double rSpin = getJoystickRT(hid);
-         double rotate = rSpin - lSpin;
+         double rotate = lSpin - rSpin;
          if(System.currentTimeMillis() % 1000  < 10)
          {
         	 System.out.println("Y: " + yMove + "\nX: " + xMove + "\nLS: " + lSpin);

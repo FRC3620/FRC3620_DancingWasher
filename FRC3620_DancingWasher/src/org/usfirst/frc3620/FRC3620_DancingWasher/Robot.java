@@ -10,8 +10,6 @@
 
 package org.usfirst.frc3620.FRC3620_DancingWasher;
 
-import java.util.Date;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;

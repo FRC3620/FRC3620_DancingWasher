@@ -14,7 +14,6 @@ package org.usfirst.frc3620.FRC3620_DancingWasher.commands;
 import edu.wpi.first.wpilibj.command.Command;
 
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
-import org.usfirst.frc3620.FRC3620_DancingWasher.subsystems.ShooterSubsystem;
 
 /**
  *

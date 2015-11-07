@@ -13,7 +13,7 @@ package org.usfirst.frc3620.FRC3620_DancingWasher.subsystems;
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
 import org.usfirst.frc3620.FRC3620_DancingWasher.RobotMap;
 import org.usfirst.frc3620.FRC3620_DancingWasher.commands.*;
-
+import org.usfirst.frc3620.FRC3620_DancingWasher.subsystems.ShootingSystemState;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
@@ -38,7 +38,9 @@ public class ShooterSubsystem extends Subsystem {
     // THIS IS HOW FAR WE FILL THE TANK!
     final double fillPressure = 75;
 
-	private ShootingSystemState currentState = ShootingSystemState.IDLE;
+	private ShootingSystemState currentState1 = ShootingSystemState.IDLE;
+	private ShootingSystemState currentState2 = ShootingSystemState.IDLE;
+	
 	private double tank1Pressure = -1;
 	private double tank2Pressure = -1;
 	
@@ -138,7 +140,110 @@ public class ShooterSubsystem extends Subsystem {
 	Timer shootingTimer = null;
 	Timer switchingTimer = null;
 
-	public void makeTheShooterWork()
+	
+	public void makeTheShooter1Work(){
+	switch (currentState1) {
+	case IDLE:
+		closeFillValve();
+		setDirectionValve1();
+		stopShooter1();
+
+		break;
+
+	case FILLING:
+		openFillValve();
+		setDirectionValve1();
+		stopShooter1();
+		tank1Pressure = Robot.shooterSubsystem.getShootingTankPressure();
+		updateDashboardWithTank1Pressure();
+		if (tank1Pressure > fillPressure)
+		{
+			setShootingSystemState1(ShootingSystemState.ALLREADY);
+		}
+		
+		break;
+		
+	case ALLREADY:
+		closeFillValve();
+		setDirectionValve1();
+		stopShooter1();
+		
+		break;
+
+	case SHOOTING:
+		startShooter1();
+		closeFillValve();
+		
+		if (shootingTimer == null)
+		{
+			shootingTimer = new Timer();
+			shootingTimer.reset();
+			shootingTimer.start();
+		}
+		if (shootingTimer.get() > .5)
+		{
+			shootingTimer = null;
+			setShootingSystemState1(ShootingSystemState.IDLE);
+			tank1Pressure = -1;
+			updateDashboardWithTank1Pressure();
+		}
+		break;
+	}
+		
+	}
+	
+public void makeTheShooter2Work(){
+	switch (currentState2) {	
+	case IDLE:
+		closeFillValve();
+		setDirectionValve2();
+		stopShooter2();
+
+		break;
+
+	case FILLING:
+		openFillValve();
+		setDirectionValve2();
+		stopShooter2();
+		tank2Pressure = Robot.shooterSubsystem.getShootingTankPressure();
+		updateDashboardWithTank2Pressure();
+		if (tank2Pressure > fillPressure)
+		{
+			setShootingSystemState2(ShootingSystemState.ALLREADY);
+		}
+		
+		break;
+		
+	case ALLREADY:
+		closeFillValve();
+		setDirectionValve2();
+		stopShooter2();
+		
+		break;
+
+	case SHOOTING:
+		startShooter2();
+		closeFillValve();
+		
+		if (shootingTimer == null)
+		{
+			shootingTimer = new Timer();
+			shootingTimer.reset();
+			shootingTimer.start();
+		}
+		if (shootingTimer.get() > .5)
+		{
+			shootingTimer = null;
+			setShootingSystemState2(ShootingSystemState.IDLE);
+			tank2Pressure = -1;
+			updateDashboardWithTank2Pressure();
+		}
+		break;
+	}
+	}
+	
+	
+	/*public void makeTheShooterWork()
 	{
 		System.out.println ("current state = " + currentState + ", pressiure = " + getShootingTankPressure());
 		switch (currentState) {
@@ -267,21 +372,33 @@ public class ShooterSubsystem extends Subsystem {
 			break;
 		}
 
+	}*/
+	
+	public ShootingSystemState getShootingSystemState1() {
+		return currentState1;
 	}
 	
-	public ShootingSystemState getShootingSystemState() {
-		return currentState;
+	public void setShootingSystemState1 (ShootingSystemState newState) {
+		currentState1 = newState;
+		updateDashboardWithCurrentState();
 	}
 	
-	public void setShootingSystemState (ShootingSystemState newState) {
-		currentState = newState;
+	public ShootingSystemState getShootingSystemState2() {
+		return currentState2;
+	}
+	
+	public void setShootingSystemState2 (ShootingSystemState newState) {
+		currentState2 = newState;
 		updateDashboardWithCurrentState();
 	}
 	
 	private void updateDashboardWithCurrentState() {
-		SmartDashboard.putString("Shooter", currentState.toString());
-		Robot.writeToDS("Shooter is in state " + currentState.toString());
+		SmartDashboard.putString("Shooter1", currentState1.toString());
+		SmartDashboard.putString("Shooter2", currentState2.toString());
+		Robot.writeToDS("Shooter1 is in state " + currentState1.toString());
+		Robot.writeToDS("Shooter2 is in state " + currentState2.toString());
 	}
+	
 	
 	private void updateDashboardWithTank1Pressure() {
 		SmartDashboard.putNumber("tank 1 pressure", tank1Pressure);

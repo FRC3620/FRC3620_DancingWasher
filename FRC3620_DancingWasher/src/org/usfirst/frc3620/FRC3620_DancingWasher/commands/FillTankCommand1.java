@@ -19,10 +19,10 @@ import org.usfirst.frc3620.FRC3620_DancingWasher.subsystems.ShootingSystemState;
 /**
  *
  */
-public class  FillTankCommand extends Command {
+public class  FillTankCommand1 extends Command {
 	RumbleCommand rumbleCommand = new RumbleCommand();
 
-    public FillTankCommand() {
+    public FillTankCommand1() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 
@@ -38,13 +38,11 @@ public class  FillTankCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ShootingSystemState currentState = Robot.shooterSubsystem.getShootingSystemState();
+    	ShootingSystemState currentState = Robot.shooterSubsystem.getShootingSystemState1();
     	if (currentState == ShootingSystemState.IDLE) {
-    		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.FILLING1);
-    	} else if (currentState == ShootingSystemState.FILLING1) {
-    		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.SWITCHING);
-    	} else if (currentState == ShootingSystemState.FILLING2) {
-    		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.ALLREADY);
+    		Robot.shooterSubsystem.setShootingSystemState1(ShootingSystemState.FILLING);
+    	} else if (currentState == ShootingSystemState.FILLING) {
+    		Robot.shooterSubsystem.setShootingSystemState1(ShootingSystemState.ALLREADY);
     	} else {
 			rumbleCommand.setMessage("Can't fill, current state = " + currentState);
 			rumbleCommand.start();

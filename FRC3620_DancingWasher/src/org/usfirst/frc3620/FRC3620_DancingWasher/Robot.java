@@ -161,7 +161,7 @@ public class Robot extends IterativeRobot {
         final HALControlWord controlWord = FRCNetworkCommunicationsLibrary
                 .HALGetControlWord();
         if (controlWord.getDSAttached()) {
-            FRCNetworkCommunicationsLibrary.HALSetErrorData(message);
+            FRCNetworkCommunicationsLibrary.HALSetErrorData(message + "\n");
         }
     }
     

@@ -393,12 +393,12 @@ public class ShooterSubsystem extends Subsystem {
 	
 	private void updateDashboardWithCurrentShooter1State() {
 		SmartDashboard.putString("Shooter1", currentState1.toString());
-		Robot.writeToDS("Shooter1 is in state " + currentState1.toString() + "\n");
+		Robot.writeToDS("Shooter1 is in state " + currentState1.toString());
 	}
 	
 	private void updateDashboardWithCurrentShooter2State() {
 		SmartDashboard.putString("Shooter2", currentState2.toString());
-		Robot.writeToDS("Shooter2 is in state " + currentState2.toString() + "\n");
+		Robot.writeToDS("Shooter2 is in state " + currentState2.toString());
 	}
 
 	private void updateDashboardWithTank1Pressure() {

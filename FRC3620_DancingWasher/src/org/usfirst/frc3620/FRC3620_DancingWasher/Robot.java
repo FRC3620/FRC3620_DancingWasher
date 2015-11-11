@@ -108,14 +108,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-        shooterSubsystem.makeTheShooter1Work();
-        shooterSubsystem.makeTheShooter2Work();
+        shooterSubsystem.teleopPeriodic();
         Scheduler.getInstance().run();
         updateDashboard();
-        
-       
-
-  
     }
 
     /**

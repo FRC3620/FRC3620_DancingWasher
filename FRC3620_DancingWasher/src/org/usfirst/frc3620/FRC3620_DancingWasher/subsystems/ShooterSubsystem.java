@@ -381,7 +381,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public void setShootingSystemState1 (ShootingSystemState newState) {
 		currentState1 = newState;
-		updateDashboardWithCurrentState();
+		updateDashboardWithCurrentShooter1State();
 	}
 	
 	public ShootingSystemState getShootingSystemState2() {
@@ -390,17 +390,19 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public void setShootingSystemState2 (ShootingSystemState newState) {
 		currentState2 = newState;
-		updateDashboardWithCurrentState();
+		updateDashboardWithCurrentShooter2State();
 	}
 	
-	private void updateDashboardWithCurrentState() {
+	private void updateDashboardWithCurrentShooter1State() {
 		SmartDashboard.putString("Shooter1", currentState1.toString());
-		SmartDashboard.putString("Shooter2", currentState2.toString());
 		Robot.writeToDS("Shooter1 is in state " + currentState1.toString() + "\n");
+	}
+	
+	private void updateDashboardWithCurrentShooter2State() {
+		SmartDashboard.putString("Shooter2", currentState2.toString());
 		Robot.writeToDS("Shooter2 is in state " + currentState2.toString() + "\n");
 	}
-	
-	
+
 	private void updateDashboardWithTank1Pressure() {
 		SmartDashboard.putNumber("tank 1 pressure", tank1Pressure);
 	}
@@ -410,7 +412,8 @@ public class ShooterSubsystem extends Subsystem {
 	}
 	
 	public void initializeDashboard() {
-		updateDashboardWithCurrentState();
+		updateDashboardWithCurrentShooter1State();
+		updateDashboardWithCurrentShooter2State();
 		updateDashboardWithTank1Pressure();
 		updateDashboardWithTank2Pressure();
 		updateDashboardFromSensors();
@@ -420,5 +423,10 @@ public class ShooterSubsystem extends Subsystem {
     {
         SmartDashboard.putNumber("PressureSensorPSI", getShootingTankPressure());
         SmartDashboard.putNumber("PressureSensorVoltage", pressureSensor.getVoltage());
+    }
+    
+    public void teleopPeriodic() {
+    	makeTheShooter1Work();
+    	makeTheShooter2Work();
     }
 }

@@ -12,12 +12,9 @@
 package org.usfirst.frc3620.FRC3620_DancingWasher.subsystems;
 
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
-import org.usfirst.frc3620.FRC3620_DancingWasher.RobotMap;
-import org.usfirst.frc3620.FRC3620_DancingWasher.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick.RumbleType;
 import edu.wpi.first.wpilibj.command.Subsystem;
-
 
 /**
  *

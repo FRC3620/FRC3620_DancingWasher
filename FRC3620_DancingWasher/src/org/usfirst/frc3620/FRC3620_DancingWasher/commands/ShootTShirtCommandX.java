@@ -37,7 +37,7 @@ public class ShootTShirtCommandX extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (!Robot.shooterSubsystem.isLidUp) {
-			rumbleCommand.setMessage("Can't shoot with lid up");
+			rumbleCommand.setMessage("Can't shoot with lid down");
 			rumbleCommand.start();
 		} else {
 			ShootingSystemState currentState = shooter.getShootingSystemState();

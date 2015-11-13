@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Shooter {
 	int shooterNumber = 0;
 	
-	ShooterSubsystem shooterSubsystem = Robot.shooterSubsystem;
+	ShooterSubsystem shooterSubsystem;
 	
 	Relay shootValve;
 
@@ -29,10 +29,13 @@ public class Shooter {
 	
 	private double tankPressure = -1;
 	
-	public Shooter (int _shooterNumber, Relay _shootValve) {
+	public Shooter (ShooterSubsystem _shooterSubsystem, int _shooterNumber, Relay _shootValve) {
 		super();
+		shooterSubsystem = _shooterSubsystem;
 		shooterNumber = _shooterNumber;
 		shootValve = _shootValve;
+		System.out.println ("shooter " + _shooterNumber);
+		System.out.println ("subsystem = " + shooterSubsystem);
 	}
 
 	public void startShooter()
@@ -55,6 +58,9 @@ public class Shooter {
 
 		case FILLING:
 			stopShooter();
+			if (shooterSubsystem == null) {
+			    throw new NullPointerException("null shooterSubsystem");
+			}
 			shooterSubsystem.startFilling(shooterNumber);
 			tankPressure = Robot.shooterSubsystem.getShootingTankPressure();
 			updateDashboardWithTankPressure();

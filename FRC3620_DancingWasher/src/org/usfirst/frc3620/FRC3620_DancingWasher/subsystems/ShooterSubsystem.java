@@ -46,8 +46,8 @@ public class ShooterSubsystem extends Subsystem {
 	
 	public ShooterSubsystem() {
 		super();
-		shooter1 = new Shooter(1, tank1Shoot);
-		shooter2 = new Shooter(2, tank2Shoot);
+		shooter1 = new Shooter(this, 1, tank1Shoot);
+		shooter2 = new Shooter(this, 2, tank2Shoot);
 	}
 
 	// Put methods for controlling this subsystem
@@ -125,17 +125,24 @@ public class ShooterSubsystem extends Subsystem {
 	{
 		tank1Lid.set(Value.kForward);
 		isLidUp = true;
+		updateDashboardWithLidPosition();
 	}
 
 	public void dropLid()
 	{
 		tank1Lid.set(Value.kReverse);
 		isLidUp = false;
+        updateDashboardWithLidPosition();
+	}
+	
+	private void updateDashboardWithLidPosition() {
+	    SmartDashboard.putString("Lid position", isLidUp ? "Up" : "Down");
 	}
 
 	public void initializeDashboard() {
 		shooter1.initializeDashboard();
 		shooter2.initializeDashboard();
+		updateDashboardWithLidPosition();
 		updateDashboardFromSensors();
 	}
 

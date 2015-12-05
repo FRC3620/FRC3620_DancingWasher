@@ -45,6 +45,8 @@ public class  FillTankCommand extends Command {
     		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.SWITCHING);
     	} else if (currentState == ShootingSystemState.FILLING2) {
     		Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.ALLREADY);
+    	} else if (currentState == ShootingSystemState.ALLREADY) {
+        	Robot.shooterSubsystem.setShootingSystemState(ShootingSystemState.FILLING1);
     	} else {
 			rumbleCommand.setMessage("Can't fill, current state = " + currentState);
 			rumbleCommand.start();

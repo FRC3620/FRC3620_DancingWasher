@@ -135,6 +135,7 @@ public class ShooterSubsystem extends Subsystem {
 
 	Timer shootingTimer = null;
 	Timer switchingTimer = null;
+	Timer fillTimer = null;
 
 	public void makeTheShooterWork()
 	{
@@ -153,13 +154,20 @@ public class ShooterSubsystem extends Subsystem {
 			setDirectionValve1();
 			stopShooter1();
 			stopShooter2();
+			
+			if (fillTimer == null) {
+				fillTimer = new Timer();
+				fillTimer.reset();
+				fillTimer.start();
+			}
 
 			// check the tank pressure, change state to SWITCHING when we
 			// are at pressure
 			tank1Pressure = Robot.shooterSubsystem.getShootingTankPressure();
 			updateDashboardWithTank1Pressure();
-			if (tank1Pressure > fillPressure)
+			if (tank1Pressure > fillPressure && fillTimer.get() > 2)
 			{
+				fillTimer = null;
 				setShootingSystemState(ShootingSystemState.SWITCHING);
 			}
 			break;
@@ -192,11 +200,18 @@ public class ShooterSubsystem extends Subsystem {
 			stopShooter1();
 			stopShooter2();
 
+			if (fillTimer == null) {
+				fillTimer = new Timer();
+				fillTimer.reset();
+				fillTimer.start();
+			}
+
 			// check the tank pressure, change state to ALLREADY when we
 			// are at pressure
 			tank2Pressure = getShootingTankPressure();
 			updateDashboardWithTank2Pressure();
-			if (tank2Pressure > fillPressure) {
+			if (tank2Pressure > fillPressure && fillTimer.get() > 2) {
+				fillTimer = null;
 				setShootingSystemState(ShootingSystemState.ALLREADY);
 			}
 

@@ -103,8 +103,10 @@ public class DriveSubsystem extends Subsystem {
              robotDrive.arcadeDrive(hid);
          }
          else { 
-        	 robotDrive.stopMotor();
-     
+        	 // stopMotor makes controllers blink like they are
+             // disconnected. arcadeDrive (0, 0) does not.
+             // robotDrive.stopMotor();
+             robotDrive.arcadeDrive(0, 0);
          }
     }
     

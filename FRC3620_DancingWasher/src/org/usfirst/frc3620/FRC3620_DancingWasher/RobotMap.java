@@ -55,7 +55,7 @@ public class RobotMap {
        // LiveWindow.addActuator("Drive", "Speed Controller 2", (Talon) driveSpeedController2);
         
        driveRobotDrive = new RobotDrive(driveSpeedController0, driveSpeedController1);
-       driveRobotDrive.setInvertedMotor(MotorType.kFrontLeft,	true);
+       driveRobotDrive.setInvertedMotor(MotorType.kRearLeft, true);
         
         driveRobotDrive.setSafetyEnabled(false);
         driveRobotDrive.setExpiration(0.1);

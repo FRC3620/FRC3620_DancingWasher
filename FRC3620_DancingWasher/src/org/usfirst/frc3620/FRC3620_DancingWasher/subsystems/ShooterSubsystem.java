@@ -139,7 +139,7 @@ public class ShooterSubsystem extends Subsystem {
 
 	public void makeTheShooterWork()
 	{
-		System.out.println ("current state = " + currentState + ", pressiure = " + getShootingTankPressure());
+		//System.out.println ("current state = " + currentState + ", pressiure = " + getShootingTankPressure());
 		switch (currentState) {
 		case IDLE:
 			closeFillValve();

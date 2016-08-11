@@ -17,9 +17,9 @@ import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
 /**
  *
  */
-public class  driveMecanumCommand extends Command {
+public class  DriveCommand extends Command {
 
-    public driveMecanumCommand() {
+    public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 
@@ -36,7 +36,8 @@ public class  driveMecanumCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.drive.mecanumDrive_Polar(Robot.oi.driveJoystick);
+    	System.out.println("driving " + System.currentTimeMillis());
+    	Robot.drive.arcadeDrive(Robot.oi.driveJoystick);
     }
 
     // Make this return true when this Command no longer needs to run execute()

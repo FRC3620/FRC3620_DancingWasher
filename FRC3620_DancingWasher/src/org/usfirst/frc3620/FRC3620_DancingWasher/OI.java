@@ -86,7 +86,7 @@ public class OI {
 
         SmartDashboard.putData("Command 1", new Command1());
 
-        SmartDashboard.putData("driveMecanumCommand", new driveMecanumCommand());
+        SmartDashboard.putData("driveMecanumCommand", new DriveCommand());
 
         SmartDashboard.putData("ShootTShirtCommand", new ShootTShirtCommand());
 

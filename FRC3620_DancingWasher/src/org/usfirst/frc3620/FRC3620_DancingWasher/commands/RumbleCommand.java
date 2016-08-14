@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
+import org.usfirst.frc3620.logger.EventLogging;
 
 /**
  *
@@ -41,7 +42,7 @@ public class  RumbleCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	SmartDashboard.putString("Reason", message);
-    	Robot.writeToDS("** " + message);
+    	EventLogging.writeToDS("** " + message);
     	Robot.rumblerSubsystem.rumblerOn();
     	timer.reset();
     	timer.start();

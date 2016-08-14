@@ -12,6 +12,7 @@ package org.usfirst.frc3620.FRC3620_DancingWasher.subsystems;
 
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
 import org.usfirst.frc3620.FRC3620_DancingWasher.RobotMap;
+import org.usfirst.frc3620.logger.EventLogging;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -295,7 +296,7 @@ public class ShooterSubsystem extends Subsystem {
 	
 	private void updateDashboardWithCurrentState() {
 		SmartDashboard.putString("Shooter", currentState.toString());
-		Robot.writeToDS("Shooter is in state " + currentState.toString());
+		EventLogging.writeToDS("Shooter is in state " + currentState.toString());
 	}
 	
 	private void updateDashboardWithTank1Pressure() {

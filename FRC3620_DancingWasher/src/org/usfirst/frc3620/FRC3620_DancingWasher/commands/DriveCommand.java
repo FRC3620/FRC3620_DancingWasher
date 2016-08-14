@@ -12,12 +12,17 @@
 package org.usfirst.frc3620.FRC3620_DancingWasher.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.slf4j.Logger;
 import org.usfirst.frc3620.FRC3620_DancingWasher.Robot;
+import org.usfirst.frc3620.logger.EventLogging;
+import org.usfirst.frc3620.logger.EventLogging.Level;
 
 /**
  *
  */
 public class  DriveCommand extends Command {
+    Logger logger = EventLogging.getLogger(getClass(), Level.INFO);
 
     public DriveCommand() {
         // Use requires() here to declare subsystem dependencies
@@ -31,12 +36,12 @@ public class  DriveCommand extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("Init");
+    	logger.info("Init");
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("driving " + System.currentTimeMillis());
+    	//System.out.println("driving " + System.currentTimeMillis());
     	Robot.drive.arcadeDrive(Robot.oi.driveJoystick);
     }
 
@@ -47,13 +52,13 @@ public class  DriveCommand extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("End");
+    	logger.info("End");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("Interrupted");
+    	logger.info("Interrupted");
     	end();
     }
 }
